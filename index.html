@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simpsonizador</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css?family=San+Francisco&display=swap" rel="stylesheet">
+
+  </head>
+  <body>
+    <div class="background-image"></div>
+    <div class="container" >
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/The_Simpsons_Logo.png" alt="Logo de Simpsonizador" class="logo">
+      <h1>Simpsonizador</h1>
+      <div class="card">
+        <img
+          src="https://cdn.custom-cursor.com/collections/120/cover-collection-simpsons.png"
+          alt="Imagen del capítulo"
+          class="card-img"
+        />
+        <div class="card-body">
+          <h2 class="card-title"></h2>
+          <p class="card-season-episode"></p>
+        </div>
+      <button class="generate-btn">Generar capítulo</button>
+      </div>
+    </div>
+
+    <script>
+      const generateBtn = document.querySelector('.generate-btn');
+      const cardTitle = document.querySelector('.card-title');
+      const cardSeasonEpisode = document.querySelector('.card-season-episode');
+      const cardImg = document.querySelector('.card-img');
+      const episodes = [
+        {
+          title: 'Simpsons Roasting on an Open Fire',
+          season: 1,
+          episode: 1,
+          imgSrc:
+            'https://m.media-amazon.com/images/M/MV5BZjJjMzMwOTctODk5ZC00NWM4LTgyNjAtNjNmN2I1OTc5OTAyXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg'
+        },
+        {
+            title: 'Bart the Genius',
+            season: 1,
+            episode: 2,
+            imgSrc:
+            'https://m.media-amazon.com/images/M/MV5BNjk5OWZmZGEtZjdiOS00NWRkLTk2MTAtYzJhNDYxYzUwZWNkXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg'
+        },
+        {
+            title: "Homer's Odyssey",
+            season: 1,
+            episode: 3,
+            imgSrc:
+            'https://m.media-amazon.com/images/M/MV5BZTIxMDk3MTEtNDExYi00MDBhLTljMmMtZjI0Y2I1YTlkZGY1XkEyXkFqcGdeQXVyMjI4OTg3MTc@._V1_.jpg'
+        },
+        {
+            title: "There's No Disgrace Like Home",
+            season: 1,
+            episode: 4,
+            imgSrc:
+            'https://m.media-amazon.com/images/M/MV5BZDdiMjQxOWYtN2FhMC00MWQwLTljMTMtZDIwMzQzY2Q4MTQ3XkEyXkFqcGdeQXVyMjI4OTg3MTc@._V1_.jpg'
+        },
+        {
+            title: 'Bart the General',
+            season: 1,
+            episode: 5,
+            imgSrc:
+            'https://m.media-amazon.com/images/M/MV5BMWM0MWNiMDQtNTc5Mi00MGYyLTlhZjUtYmE1YTRmNDRmMjc2XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg'
+        },
+        {
+            title: 'Moaning Lisa',
+            season: 1,
+            episode: 6,
+            imgSrc:
+            'https://m.media-amazon.com/images/M/MV5BNTFkZDVhODktYWI5NC00Yzc0LTg4ZmEtZjY1MGRjMDdkYTZiXkEyXkFqcGdeQXVyMjI4OTg3MTc@._V1_FMjpg_UX1280_.jpg'
+        },
+        {
+            title: 'The Call of the Simpsons',
+            season: 1,
+            episode: 7,
+            imgSrc:
+            'https://m.media-amazon.com/images/M/MV5BNTYyMGNkODYtMmZlZC00MmZiLTk5YTUtODMyZmUzNjU2NWI4XkEyXkFqcGdeQXVyMjI4OTg3MTc@._V1_FMjpg_UX1280_.jpg'
+        },
+        {
+            title: 'The Telltale Head',
+            season: 1,
+            episode: 8,
+            imgSrc:
+            'https://m.media-amazon.com/images/M/MV5BMzhhNTM3ZDYtYWQ3OS00NDU2LTk4MGEtOGZmMWUwODlmMjQyXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_FMjpg_UX1280_.jpg'
+        },
+        {
+            title: 'Life on the Fast Lane',
+            season: 1,
+            episode: 9,
+            imgSrc:
+            'https://m.media-amazon.com/images/M/MV5BNjY3NzExYWYtNGFlZC00NmJkLTlhZjQtN2RlYWIyMTYzYWYwXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_FMjpg_UX1280_.jpg'
+        },
+        {
+            title: "Homer's Night Out",
+            season: 1,
+            episode: 10,
+            imgSrc:
+            'https://m.media-amazon.com/images/M/MV5BNDRkZmJlZGItNDc2NC00YTQ0LTk1NWYtODEyNGUwYzYyZmU5XkEyXkFqcGdeQXVyMjI4OTg3MTc@._V1_.jpg'
+        },
+        {
+            title: 'The Crepes of Wrath',
+            season: 1,
+            episode: 11,
+            imgSrc:
+            'https://m.media-amazon.com/images/M/MV5BMDI3NmNlMGItNzg1ZC00ZWZhLTg3ZjItZWY0ZmI5MTIwODdmXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg'
+        },
+        {
+            title: "Krusty Gets Busted",
+            season: 1,
+            episode: 12,
+            imgSrc:
+            'https://m.media-amazon.com/images/M/MV5BNjdkNjY4OWEtMGQwNi00YWQyLTgzODItNmQ3ZmJhODhhOGJiXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg'
+        },
+        {
+            title: "Some Enchanted Evening",
+            season: 1,
+            episode: 13,
+            imgSrc:
+            'https://m.media-amazon.com/images/M/MV5BNmI0YjUyMzItMjM1ZS00NWJkLTkxZGMtZWI2NWFiOTljYWNlXkEyXkFqcGdeQXVyNTU3MDE0MjQ@._V1_.jpg'
+        }
+
+        ];
+
+      function getRandomEpisode() {
+        const randomIndex = Math.floor(Math.random() * episodes.length);
+        return episodes[randomIndex];
+      }
+
+      function displayEpisode() {
+        const episode = getRandomEpisode();
+        cardTitle.innerText = episode.title;
+        cardSeasonEpisode.innerText = `Temporada ${episode.season}, Episodio ${episode.episode}`;
+        cardImg.setAttribute('src', episode.imgSrc);
+        cardImg.style.maxWidth = "100%";
+        cardImg.style.height = "auto";
+  }
+      
+
+      generateBtn.addEventListener('click', displayEpisode);
+    </script>
+  </body>
+</html>

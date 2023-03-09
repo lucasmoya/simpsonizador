@@ -1,0 +1,20 @@
+const apiKey = 'b96b6953ec3b68b4949fd4bdd9886094';
+const searchUrl = `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=The%20Simpsons&language=es-MX`;
+const episodeUrl = (tvId, seasonNumber, episodeNumber) => `https://api.themoviedb.org/3/tv/${tvId}/season/${seasonNumber}/episode/${episodeNumber}/images?api_key=${apiKey}`;
+
+// Primero, buscamos la serie de televisión de los Simpsons
+fetch(searchUrl)
+  .then(response => response.json())
+  .then(data => {
+    const simpsonsTvId = data.results[0].id; // Obtenemos el ID de la serie de televisión
+
+    // Luego, buscamos el episodio en particular que queremos
+    fetch(episodeUrl(simpsonsTvId, 1, 1)) // Por ejemplo, el episodio 1 de la temporada 1
+      .then(response => response.json())
+      .then(data => {
+        const imageUrl = `https://image.tmdb.org/t/p/w500/${data.stills[0].file_path}`; // Obtenemos la URL de la imagen
+        console.log(imageUrl); // La imprimimos en la consola
+      })
+      .catch(error => console.error(error));
+  })
+  .catch(error => console.error(error));

@@ -6,7 +6,7 @@
     <title>Simpsonizador</title>
     <link rel="stylesheet" href="styles.css" />
     <link href="https://fonts.googleapis.com/css?family=San+Francisco&display=swap" rel="stylesheet">
-
+    <script src="tmdb-imagenes.js"></script>
   </head>
   <body>
     <div class="background-image"></div>
@@ -251,9 +251,26 @@
         cardImg.style.maxWidth = "100%";
         cardImg.style.height = "auto";
   }
-      
+
 
       generateBtn.addEventListener('click', displayEpisode);
+      
+
+      async function getEpisodeImages() {
+        const apiKey = 'b96b6953ec3b68b4949fd4bdd9886094'; // Reemplaza con tu propia clave de API
+        const baseUrl = 'https://api.themoviedb.org/3/tv/456/images'; // Reemplaza 456 con el ID de la serie que estás buscando
+        const imageSize = 'w500'; // Reemplaza con el tamaño de imagen que desees obtener
+        for (let i = 0; i < episodes.length; i++) {
+          const episode = episodes[i];
+          const response = await fetch(`${baseUrl}?api_key=${apiKey}&season_number=${episode.season}&episode_number=${episode.episode}`);
+          const data = await response.json();
+          if (data.stills && data.stills.length > 0) {
+            episode.imgSrc = `https://image.tmdb.org/t/p/${imageSize}/${data.stills[0].file_path}`;
+    }
+  }
+}
+
+getEpisodeImages();
     </script>
   </body>
 </html>

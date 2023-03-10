@@ -7,6 +7,7 @@ fetch(searchUrl)
   .then(response => response.json())
   .then(data => {
     const simpsonsTvId = data.results[0].id; // Obtenemos el ID de la serie de televisión
+    console.log(simpsonsTvId);
 
     // Luego, buscamos el episodio en particular que queremos
     fetch(episodeUrl(simpsonsTvId, 1, 1)) // Por ejemplo, el episodio 1 de la temporada 1
